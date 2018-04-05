@@ -9,7 +9,6 @@ create table tb_usuario
     login_usuario varchar(50)
 );
 
-
 create table tb_cliente
 (
 	id_cliente integer primary key auto_increment,
@@ -27,3 +26,7 @@ create table tb_cliente
 insert into tb_usuario(nome_usuario,senha_usuario,login_usuario) values ('Gabriel','1234','vrag');
 insert into tb_usuario(nome_usuario,senha_usuario,login_usuario) values ('Daniel','123456','danyhero');
 insert into tb_usuario(nome_usuario,senha_usuario,login_usuario) values ('Thiago','12341234','catchoro');
+
+
+insert into tb_cliente(cpf_cliente, nome_cliente, mail_cliente, cep_cliente, rua_cliente, nr_cliente, cidade_cliente, data_cliente, uf_cliente) values
+(),
