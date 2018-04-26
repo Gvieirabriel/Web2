@@ -4,6 +4,8 @@
     Author     : gqueiroz
 --%>
 
+<%@page import="com.ufpr.tads.web2.beans.Cliente"%>
+<%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" errorPage="erro.jsp" pageEncoding="UTF-8"%>
 
@@ -35,16 +37,38 @@
             </ul>
           </div>
         </div>
-        </nav>   
+        </nav>
         </br>
         <div class="container text-center"> 
+            <h1>Lista de Clientes</h1>
+            </br>
             <div class="col-sm-2 sidenav"></div>
             <div class="col-sm-8 text-center">  
                 <jsp:useBean id="loginBean" scope="session" class="com.ufpr.tads.web2.beans.LoginBean" />
                 <c:choose>
                     <c:when test = "${not empty loginBean.nomeUsuario}">
-                        <h1>Usuário logado</h1>
-                        <h2><c:out value = "${loginBean.nomeUsuario}"/></h2>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                              <th>CPF</th>
+                              <th>Nome</th>
+                              <th>Email</th>
+                            </tr>
+                            </thead>
+                                <tbody>
+                                    <c:forEach items="${list}" var="cliente">
+                                        <tr>
+                                        <td><c:out value = "${cliente.cpfCliente}"/></td>
+                                        <td><c:out value = "${cliente.nomeCliente}"/></td>
+                                        <td><c:out value = "${cliente.emailCliente}"/></td>
+                                        <td><a href="ClientesServlet?action=show&id=" onclick="location.href=this.href+${cliente.idCliente};return false;"><i class="glyphicon glyphicon-list-alt"></i></a></td>
+                                        <td><a href="ClientesServlet?action=formUpdate&id=" onclick="location.href=this.href+${cliente.idCliente};return false;"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                                        <td><a href="ClientesServlet?action=remove&id=" onclick="location.href=this.href+${cliente.idCliente};return false;"><i class="glyphicon glyphicon-remove"></i></a></td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                        </table>
+                        <button onclick="window.location.href='ClientesServlet?action=formNew'">Novo Cliente</button>
                     </c:when>
                     <c:otherwise>
                         <jsp:forward page="index.jsp">
@@ -53,7 +77,6 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-            <div class="col-sm-2 sidenav"></div>
         </div>
     </body>
     <footer class="container-fluid text-center">

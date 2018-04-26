@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author gqueiroz
  */
 public class ConfigBean implements Serializable {
+    
     private String adminEmail;
 
     /**

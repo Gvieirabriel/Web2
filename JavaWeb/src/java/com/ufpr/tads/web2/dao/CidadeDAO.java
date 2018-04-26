@@ -5,14 +5,16 @@
  */
 package com.ufpr.tads.web2.dao;
 
-import com.ufpr.tads.web2.beans.Usuario;
+import com.ufpr.tads.web2.beans.Cidade;
 import java.util.List;
 
 /**
  *
  * @author gqueiroz
  */
-public interface UsuarioDAO {
-    List<Usuario> listPessoa();  
-    Usuario loginPessoa(String login, String senha);
+public interface CidadeDAO {
+    
+    List<Cidade> listCidade();  
+    
+    Cidade buscaCidadePorId(int id);
 }

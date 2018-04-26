@@ -6,7 +6,6 @@
 package com.ufpr.tads.web2.servlets;
 
 import com.ufpr.tads.web2.beans.Usuario;
-import com.mysql.jdbc.StringUtils;
 import com.ufpr.tads.web2.beans.LoginBean;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -25,11 +24,8 @@ import com.ufpr.tads.web2.dao.UsuarioDAO;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
-
     private HttpSession session;
-
     private RequestDispatcher rd;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -58,26 +54,22 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         session = request.getSession();
-
+        
         String login = request.getParameter("login");
         String senha = request.getParameter("senha");
-
         UsuarioDAO dao = new UsuarioDAOImpl();
         Usuario pessoa = dao.loginPessoa(login, senha);
 
-        if (!StringUtils.isNullOrEmpty(pessoa.getNomeUsuario())) {
+        if (pessoa.getNomeUsuario() == null) {
+            rd = getServletContext().getRequestDispatcher("/index.jsp");
+            request.setAttribute("msg", "Usuário/Senha inválidos!");
+            rd.forward(request, response);
+        } else {
             LoginBean loginBean = new LoginBean();
             loginBean.setLoginUsuario(pessoa.getLoginUsuario());
             loginBean.setNomeUsuario(pessoa.getNomeUsuario());
             session.setAttribute("loginBean", loginBean);
-            
             response.sendRedirect("portal.jsp");
-        } else {
-            rd = getServletContext().getRequestDispatcher("/erro.jsp");
-            request.setAttribute("msg", "Usuário/Senha incorretos!");
-            request.setAttribute("page", "index.html");
-            rd.forward(request, response);
-            return;
         }
     }
 

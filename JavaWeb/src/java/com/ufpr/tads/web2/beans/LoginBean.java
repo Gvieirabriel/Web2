@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author gqueiroz
  */
 public class LoginBean implements Serializable {
+    
     private String loginUsuario;
     
     private String nomeUsuario;

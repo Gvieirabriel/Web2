@@ -4,6 +4,7 @@
     Author     : gqueiroz
 --%>
 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" errorPage="erro.jsp" pageEncoding="UTF-8"%>
 
@@ -35,16 +36,59 @@
             </ul>
           </div>
         </div>
-        </nav>   
+        </nav>
         </br>
         <div class="container text-center"> 
+            </br>
+            <h1>Detalhes do Cliente</h1>
             <div class="col-sm-2 sidenav"></div>
             <div class="col-sm-8 text-center">  
                 <jsp:useBean id="loginBean" scope="session" class="com.ufpr.tads.web2.beans.LoginBean" />
                 <c:choose>
                     <c:when test = "${not empty loginBean.nomeUsuario}">
-                        <h1>Usuário logado</h1>
-                        <h2><c:out value = "${loginBean.nomeUsuario}"/></h2>
+                        <table class="table">
+                            <tr>
+                              <th>Nome</th>
+                              <td><p><c:out value = "${client.nomeCliente}"/></p></td>
+                            </tr>
+                            <tr>
+                              <th>CPF</th>
+                              <td><p><c:out value = "${client.cpfCliente}"/></p></td>
+                            </tr>
+                            <tr>
+                              <th>Email</th>
+                              <td><p><c:out value = "${client.emailCliente}"/></p></td>
+                            </tr>
+                            <tr>
+                              <th>CEP</th>
+                              <td><p><c:out value = "${client.cepCliente}"/></p></td>
+                            </tr>
+                            <tr>
+                              <th>Rua</th>
+                              <td><p><c:out value = "${client.ruaCliente}"/></p></td>
+                            </tr>
+                            <tr>
+                              <th>Cidade</th>
+                              <td><p><c:out value = "${client.cidadeCliente}"/></p></td>
+                            </tr>
+                            <tr>
+                              <th>UF</th>
+                              <td><p><c:out value = "${client.ufCliente}"/></p></td>
+                            </tr>
+                            <tr>
+                              <th>NR</th>
+                              <td><p><c:out value = "${client.nrCliente}"/></p></td>
+                            </tr>
+                            <tr>
+                              <th>Nascimento</th>
+                              <td>
+                                <p>
+                                    <fmt:formatDate value="${client.dataCliente}"pattern="dd/MM/YYYY" var="formateDate"/>
+                                    <c:out value = "${formateDate}"/>
+                                </p>
+                              </td>
+                            </tr>
+                        </table>
                     </c:when>
                     <c:otherwise>
                         <jsp:forward page="index.jsp">
@@ -53,7 +97,6 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-            <div class="col-sm-2 sidenav"></div>
         </div>
     </body>
     <footer class="container-fluid text-center">

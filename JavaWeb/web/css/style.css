@@ -1,0 +1,65 @@
+    body {font-family: Arial, Helvetica, sans-serif;background-repeat: no-repeat;background-image: url("https://i.imgur.com/2PgYzIX.jpg");background-attachment: fixed;}
+    form {border: 3px solid #f1f1f1}
+
+    input[type=text], input[type=password], input[type=email], input[type=date], input[type=number] {
+        width: 95%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 30%;
+    }
+
+    button:hover {
+    opacity: 0.8;
+    }
+
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    .container {
+        padding: 200px;  
+    }
+    
+    .row.content {height: 450px}
+    
+    .sidenav {
+      padding-top: 20px;
+      height: 100%;
+    }
+    
+    footer {
+      background-color: #555;
+      color: white;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      padding-top: 15px;
+      padding-bottom: 10px;
+    }
+    
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+    
+    span.psw {
+    float: right;
+    padding-top: 16px;
+    }

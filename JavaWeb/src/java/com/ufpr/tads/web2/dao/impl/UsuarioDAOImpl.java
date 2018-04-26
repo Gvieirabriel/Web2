@@ -5,7 +5,6 @@
  */
 package com.ufpr.tads.web2.dao.impl;
 
-import com.ufpr.tads.web2.dao.ConnectionFactory;
 import com.ufpr.tads.web2.beans.Usuario;
 import com.ufpr.tads.web2.dao.ConnectionFactory;
 import java.sql.Connection;
@@ -15,7 +14,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import com.ufpr.tads.web2.dao.UsuarioDAO;
-import com.ufpr.tads.web2.dao.UsuarioDAO;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -52,17 +56,22 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         try {
             ps = con.prepareStatement("SELECT nome_usuario FROM tb_usuario WHERE login_usuario = ? AND senha_usuario = ?");
             ps.setString(1, login);
-            ps.setString(2, senha);
+            MessageDigest algorithm = MessageDigest.getInstance("MD5");
+            byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
+            ps.setString(2, Arrays.toString(messageDigest));
             rs = ps.executeQuery();
             Usuario pessoa = new Usuario();
             while (rs.next()) {
                 pessoa.setLoginUsuario(login);
-                pessoa.setSenhaUsuario(senha);
                 pessoa.setNomeUsuario(rs.getString(1));
             }
             return pessoa;
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

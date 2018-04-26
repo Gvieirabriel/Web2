@@ -7,6 +7,7 @@ package com.ufpr.tads.web2.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +21,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
 public class LogoutServlet extends HttpServlet {
-
     private HttpSession session;
+    private RequestDispatcher rd;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,23 +35,13 @@ public class LogoutServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
-
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html><head>");
-            out.println("<title>Logout</title>");
-            out.println("</head><body>");
-            out.println("<p>Usuário saiu do sistema!</p>");
-            out.println("<a href=\"index.html\">Voltar para home</a>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        rd = getServletContext().getRequestDispatcher("/index.jsp");
+        request.setAttribute("msg", "Usuário desconectado com sucesso!");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
