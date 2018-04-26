@@ -4,9 +4,9 @@ use bd;
 create table tb_usuario
 (
 	id integer primary key auto_increment,
-	nome_usuario  	varchar(100),
+	nome_usuario  	varchar(100) unique,
 	senha_usuario 	varchar(50),
-    	login_usuario 	varchar(50)
+	login_usuario 	varchar(50) unique
 );
 
 create table tb_estado (
@@ -20,7 +20,7 @@ CREATE TABLE tb_cidade (
 	id_cidade 	 	int not null auto_increment,
 	id_estado 		int not null,
 	nome_cidade 	varchar (100) not null,
-    	foreign key(id_estado) references tb_estado(id_estado),
+	foreign key(id_estado) references tb_estado(id_estado),
 	primary key(id_cidade)
 );
 
@@ -28,7 +28,7 @@ create table tb_cliente
 (
 	id_cliente 		integer primary key auto_increment,
     	cpf_cliente 	char(11) unique,
-    	nome_cliente 	varchar(100) unique,
+    	nome_cliente 	varchar(100),
     	email_cliente 	varchar(100) unique,
     	cep_cliente 	char(8),
     	rua_cliente 	varchar(100),
@@ -41,9 +41,9 @@ create table tb_cliente
 );
 
 insert into tb_usuario(nome_usuario,senha_usuario,login_usuario) values
-('Gabriel Vieira','1234','Vrag'),
-('Daniel Henrique','1234','Danyhero'),
-('Thiago Drulla','1234','Drulla');
+('Gabriel Vieira','d41d8cd98f00b204e9800998ecf8427e','Vrag'),
+('Daniel Henrique','d41d8cd98f00b204e9800998ecf8427e','Danyhero'),
+('Thiago Drulla','d41d8cd98f00b204e9800998ecf8427e','Drulla');
 
 insert into tb_estado (nome_estado, sigla_estado) values
 ('Acre', 'AC'),
