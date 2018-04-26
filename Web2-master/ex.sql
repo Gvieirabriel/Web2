@@ -27,9 +27,9 @@ CREATE TABLE tb_cidade (
 create table tb_cliente
 (
 	id_cliente 		integer primary key auto_increment,
-    	cpf_cliente 	char(11),
-    	nome_cliente 	varchar(100),
-    	email_cliente 	varchar(100),
+    	cpf_cliente 	char(11) unique,
+    	nome_cliente 	varchar(100) unique,
+    	email_cliente 	varchar(100) unique,
     	cep_cliente 	char(8),
     	rua_cliente 	varchar(100),
     	nr_cliente 		integer,
