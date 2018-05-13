@@ -5,26 +5,25 @@
  */
 package com.ufpr.tads.web2.servlets;
 
-import com.ufpr.tads.web2.beans.LoginBean;
-import com.ufpr.tads.web2.dao.ClienteDAO;
-import com.ufpr.tads.web2.dao.impl.ClienteDAOImpl;
+import com.google.gson.Gson;
+import com.ufpr.tads.web2.beans.Cidade;
+import com.ufpr.tads.web2.facade.CidadeFacade;
+import com.ufpr.tads.web2.facade.impl.DefaultCidadeFacade;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Pichau
+ * @author gqueiroz
  */
-@WebServlet(name = "RemoverClienteServlet", urlPatterns = {"/RemoverClienteServlet"})
-public class RemoverClienteServlet extends HttpServlet {
-    private HttpSession session;
-    private RequestDispatcher rd;
+@WebServlet(name = "AjaxServlet", urlPatterns = {"/AjaxServlet"})
+public class AjaxServlet extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,20 +35,22 @@ public class RemoverClienteServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        session = request.getSession();
-        LoginBean login = (LoginBean) session.getAttribute("loginBean");
+        
+        String estado = request.getParameter("estadoId");
+        
+        System.out.println(estado);
+        
+        CidadeFacade cidadeFacade = new DefaultCidadeFacade();
+        
+        List<Cidade> lista = cidadeFacade.buscarTodosPorEstado(estado);
+       
+        // transforma o MAP em JSON
+        String json = new Gson().toJson(lista);
 
-        if (login == null) {
-            rd = getServletContext().getRequestDispatcher("/index.jsp");
-            request.setAttribute("msg", "Usuário deve se autenticar para acessar o sistema!");
-            rd.forward(request, response);
-        } else {
-            ClienteDAO clienteDao = new ClienteDAOImpl();
-            String id = request.getParameter("id");
-            clienteDao.removeClientById(id);
-            rd = getServletContext().getRequestDispatcher("/ClientesServlet");
-            rd.forward(request, response);
-        }
+        // retorna o JSON
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);  
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -5,12 +5,16 @@
  */
 package com.ufpr.tads.web2.servlets;
 
+import com.ufpr.tads.web2.beans.Cidade;
 import com.ufpr.tads.web2.beans.Cliente;
 import com.ufpr.tads.web2.beans.LoginBean;
-import com.ufpr.tads.web2.dao.ClienteDAO;
-import com.ufpr.tads.web2.dao.impl.ClienteDAOImpl;
+import com.ufpr.tads.web2.facade.CidadeFacade;
 import com.ufpr.tads.web2.facade.ClientesFacade;
+import com.ufpr.tads.web2.facade.EstadoFacade;
+import com.ufpr.tads.web2.facade.impl.DefaultCidadeFacade;
 import com.ufpr.tads.web2.facade.impl.DefaultClientesFacade;
+import com.ufpr.tads.web2.facade.impl.DefaultEstadoFacade;
+import com.ufpr.tads.web2.strategies.ValidaCPFStrategy;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,6 +53,9 @@ public class ClientesServlet extends HttpServlet {
         LoginBean login = (LoginBean) session.getAttribute("loginBean");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
         String action = request.getParameter("action");
+        EstadoFacade estadoFacade;
+        CidadeFacade cidadeFacade;
+        ValidaCPFStrategy valida = new ValidaCPFStrategy();
         if(action == null)
             action = "list";
         
@@ -64,8 +71,15 @@ public class ClientesServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
                 case "formUpdate":
-                    rd = getServletContext().getRequestDispatcher("/clientesAlterar.jsp");
-                    request.setAttribute("client", clientesFacade.buscar(request.getParameter("id")));
+                    estadoFacade = new DefaultEstadoFacade();
+                    cidadeFacade = new DefaultCidadeFacade();
+                    rd = getServletContext().getRequestDispatcher("/clienteForm.jsp");
+                    Cliente clienteUpdate = clientesFacade.buscar(request.getParameter("id"));
+                    request.setAttribute("client",clienteUpdate);
+                    Cidade cidade = cidadeFacade.buscarCidadePorId(clienteUpdate.getCidadeCliente());
+                    request.setAttribute("cidadeCliente", cidade);
+                    request.setAttribute("estados",estadoFacade.buscarTodos());
+                    request.setAttribute("form","alterar");
                     rd.forward(request, response);
                     break;
                 case "remove":
@@ -74,40 +88,47 @@ public class ClientesServlet extends HttpServlet {
                     break;
                 case "update":
                     try {
+                        if(valida.isCPF(request.getParameter("cpfCliente")))
+                        {
                         Cliente cliente = new Cliente();
                         cliente.setNomeCliente(request.getParameter("nomeCliente"));
                         cliente.setCpfCliente(request.getParameter("cpfCliente"));
                         cliente.setEmailCliente(request.getParameter("emailCliente"));
                         cliente.setCepCliente(request.getParameter("cepCliente"));
                         cliente.setRuaCliente(request.getParameter("ruaCliente"));
-                        cliente.setCidadeCliente(request.getParameter("cidadeCliente"));
-                        cliente.setUfCliente(request.getParameter("ufCliente"));
+                        cliente.setCidadeCliente(Integer.parseInt(request.getParameter("cidade")));
                         cliente.setNrCliente(Integer.parseInt(request.getParameter("nrCliente")));
                         cliente.setDataCliente(format.parse(request.getParameter("dateCliente")));
                         cliente.setIdCliente(Integer.parseInt(request.getParameter("idCliente")));
                         clientesFacade.alterar(cliente);
+                        }
                     } catch (ParseException ex) {
                         Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     response.sendRedirect("ClientesServlet");
                     break;
                 case "formNew":
-                    rd = getServletContext().getRequestDispatcher("/clienteNovo.jsp");
+                    estadoFacade = new DefaultEstadoFacade();
+                    rd = getServletContext().getRequestDispatcher("/clienteForm.jsp");
+                    request.setAttribute("estados",estadoFacade.buscarTodos());
                     rd.forward(request, response);
                     break;
                 case "new":
                     try {
-                        Cliente cliente = new Cliente();
-                        cliente.setNomeCliente(request.getParameter("nomeCliente"));
-                        cliente.setCpfCliente(request.getParameter("cpfCliente"));
-                        cliente.setEmailCliente(request.getParameter("emailCliente"));
-                        cliente.setCepCliente(request.getParameter("cepCliente"));
-                        cliente.setRuaCliente(request.getParameter("ruaCliente"));
-                        cliente.setCidadeCliente(request.getParameter("cidadeCliente"));
-                        cliente.setUfCliente(request.getParameter("ufCliente"));
-                        cliente.setNrCliente(Integer.parseInt(request.getParameter("nrCliente")));
-                        cliente.setDataCliente(format.parse(request.getParameter("dateCliente")));            
-                        clientesFacade.inserir(cliente);
+                        if(valida.isCPF(request.getParameter("cpfCliente")))
+                        {
+                            Cliente cliente = new Cliente();
+                            cliente.setNomeCliente(request.getParameter("nomeCliente"));
+                            cliente.setCpfCliente(request.getParameter("cpfCliente"));
+                            cliente.setEmailCliente(request.getParameter("emailCliente"));
+                            cliente.setCepCliente(request.getParameter("cepCliente"));
+                            cliente.setRuaCliente(request.getParameter("ruaCliente"));
+                            cliente.setCidadeCliente(Integer.parseInt(request.getParameter("cidade")));
+                            cliente.setUfCliente(request.getParameter("ufCliente"));
+                            cliente.setNrCliente(Integer.parseInt(request.getParameter("nrCliente")));
+                            cliente.setDataCliente(format.parse(request.getParameter("dateCliente")));            
+                            clientesFacade.inserir(cliente);
+                        }
                     } catch (ParseException ex) {
                         Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }  

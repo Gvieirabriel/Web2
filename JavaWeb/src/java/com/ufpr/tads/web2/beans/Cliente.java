@@ -26,7 +26,7 @@ public class Cliente implements Serializable {
      
     private String ruaCliente;
     
-    private String cidadeCliente;
+    private int cidadeCliente;
     
     private String ufCliente;
     
@@ -121,14 +121,14 @@ public class Cliente implements Serializable {
     /**
      * @return the cidadeCliente
      */
-    public String getCidadeCliente() {
+    public int getCidadeCliente() {
         return cidadeCliente;
     }
 
     /**
      * @param cidadeCliente the cidadeCliente to set
      */
-    public void setCidadeCliente(String cidadeCliente) {
+    public void setCidadeCliente(int cidadeCliente) {
         this.cidadeCliente = cidadeCliente;
     }
 

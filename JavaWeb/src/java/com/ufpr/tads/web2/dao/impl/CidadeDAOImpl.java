@@ -33,6 +33,9 @@ public class CidadeDAOImpl implements CidadeDAO {
             List<Cidade> list = new ArrayList<Cidade>();
             while (rs.next()) {
                 Cidade cidade = new Cidade();
+                cidade.setIdCidade(rs.getInt(1));
+                cidade.setIdEstado(rs.getInt(2));
+                cidade.setNomeCidade(rs.getString(3));
                 list.add(cidade);
             }
             return list;
@@ -44,7 +47,46 @@ public class CidadeDAOImpl implements CidadeDAO {
 
     @Override
     public Cidade buscaCidadePorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement("SELECT * FROM tb_cidade WHERE id_cidade = ?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            Cidade cidade = new Cidade();
+            while (rs.next()) {
+                cidade.setIdCidade(rs.getInt(1));
+                cidade.setIdEstado(rs.getInt(2));
+                cidade.setNomeCidade(rs.getString(3));
+            }
+            return cidade;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Cidade> listCidadePorEstado(String estado) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement("SELECT * FROM tb_cidade WHERE id_estado=?");
+            ps.setString(1, estado);
+            rs = ps.executeQuery();
+            List<Cidade> list = new ArrayList<Cidade>();
+            while (rs.next()) {
+                Cidade cidade = new Cidade();
+                cidade.setIdCidade(rs.getInt(1));
+                cidade.setIdEstado(rs.getInt(2));
+                cidade.setNomeCidade(rs.getString(3));
+                list.add(cidade);
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
 }

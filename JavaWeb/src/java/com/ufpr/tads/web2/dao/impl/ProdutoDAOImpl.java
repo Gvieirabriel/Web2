@@ -5,9 +5,9 @@
  */
 package com.ufpr.tads.web2.dao.impl;
 
-import com.ufpr.tads.web2.beans.Estado;
+import com.ufpr.tads.web2.beans.Produto;
 import com.ufpr.tads.web2.dao.ConnectionFactory;
-import com.ufpr.tads.web2.dao.EstadoDAO;
+import com.ufpr.tads.web2.dao.ProdutoDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,24 +19,23 @@ import java.util.List;
  *
  * @author gqueiroz
  */
-public class EstadoDAOImpl implements EstadoDAO {
+public class ProdutoDAOImpl implements ProdutoDAO {
 
     Connection con = new ConnectionFactory().getConnection();
-    
+
     @Override
-    public List<Estado> listEstado() {
+    public List<Produto> listProduto() {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT * FROM tb_estado");
+            ps = con.prepareStatement("SELECT * FROM tb_produto");
             rs = ps.executeQuery();
-            List<Estado> list = new ArrayList<Estado>();
+            List<Produto> list = new ArrayList<Produto>();
             while (rs.next()) {
-                Estado estado = new Estado();
-                estado.setIdEstado(rs.getInt(1));
-                estado.setNomeEstado(rs.getString(2));
-                estado.setSiglaEstado(rs.getString(3));
-                list.add(estado);
+                Produto p = new Produto();
+                p.setIdProduto(rs.getInt(1));
+                p.setNomeProduto(rs.getString(3));
+                list.add(p);
             }
             return list;
         } catch (SQLException e) {
@@ -46,7 +45,7 @@ public class EstadoDAOImpl implements EstadoDAO {
     }
 
     @Override
-    public Estado buscaEstadoPorId(int id) {
+    public Produto buscaProdutoPorId(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

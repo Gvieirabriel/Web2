@@ -5,18 +5,16 @@
  */
 package com.ufpr.tads.web2.dao;
 
-import com.ufpr.tads.web2.beans.Cidade;
+import com.ufpr.tads.web2.beans.Produto;
 import java.util.List;
 
 /**
  *
  * @author gqueiroz
  */
-public interface CidadeDAO {
+public interface ProdutoDAO {
+        
+    List<Produto> listProduto();  
     
-    List<Cidade> listCidade();  
-    
-    Cidade buscaCidadePorId(int id);
-
-    public List<Cidade> listCidadePorEstado(String estado);
+    Produto buscaProdutoPorId(int id);
 }

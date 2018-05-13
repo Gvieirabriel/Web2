@@ -42,10 +42,10 @@ public class ClienteDAOImpl implements ClienteDAO{
                 cliente.setCepCliente(rs.getString(5));
                 cliente.setRuaCliente(rs.getString(6));
                 cliente.setNrCliente(rs.getInt(7));
-                cliente.setCidadeCliente(rs.getString(8));
-                cal.setTime(rs.getDate(9));
+                cal.setTime(rs.getDate(8));
                 cliente.setDataCliente(cal.getTime());
-                cliente.setUfCliente(rs.getString(10));
+                cliente.setUfCliente(rs.getString(9));
+                cliente.setCidadeCliente(rs.getInt(10));
                 list.add(cliente);
             }
             return list;
@@ -72,9 +72,9 @@ public class ClienteDAOImpl implements ClienteDAO{
                 cliente.setCepCliente(rs.getString(5));
                 cliente.setRuaCliente(rs.getString(6));
                 cliente.setNrCliente(rs.getInt(7));
-                cliente.setCidadeCliente(rs.getString(8));
-                cliente.setDataCliente(rs.getTimestamp(9));
-                cliente.setUfCliente(rs.getString(10));
+                cliente.setDataCliente(rs.getTimestamp(8));
+                cliente.setUfCliente(rs.getString(9));
+                cliente.setCidadeCliente(rs.getInt(10));
             }
             return cliente;
         } catch (SQLException e) {
@@ -100,14 +100,14 @@ public class ClienteDAOImpl implements ClienteDAO{
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("UPDATE tb_cliente SET cpf_cliente = ?, nome_cliente = ?, email_cliente = ?, cep_cliente = ?, rua_cliente = ?, nr_cliente = ?, cidade_cliente = ?, data_cliente = ?, uf_cliente = ? WHERE id_cliente = ?");
+            ps = con.prepareStatement("UPDATE tb_cliente SET cpf_cliente = ?, nome_cliente = ?, email_cliente = ?, cep_cliente = ?, rua_cliente = ?, nr_cliente = ?, id_cidade = ?, data_cliente = ?, uf_cliente = ? WHERE id_cliente = ?");
             ps.setString(1, cliente.getCpfCliente());
             ps.setString(2, cliente.getNomeCliente());
             ps.setString(3, cliente.getEmailCliente());
             ps.setString(4, cliente.getCepCliente());
             ps.setString(5, cliente.getRuaCliente());
             ps.setInt(6, cliente.getNrCliente());
-            ps.setString(7, cliente.getCidadeCliente());
+            ps.setInt(7, cliente.getCidadeCliente());
             ps.setDate(8, new java.sql.Date(cliente.getDataCliente().getTime()));
             ps.setString(9, cliente.getUfCliente());
             ps.setInt(10, cliente.getIdCliente());
@@ -121,14 +121,14 @@ public class ClienteDAOImpl implements ClienteDAO{
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("INSERT INTO tb_cliente (cpf_cliente, nome_cliente, email_cliente, cep_cliente, rua_cliente, nr_cliente, cidade_cliente, data_cliente, uf_cliente) VALUES (?,?,?,?,?,?,?,?,?)");
+            ps = con.prepareStatement("INSERT INTO tb_cliente (cpf_cliente, nome_cliente, email_cliente, cep_cliente, rua_cliente, nr_cliente, id_cidade, data_cliente, uf_cliente) VALUES (?,?,?,?,?,?,?,?,?)");
             ps.setString(1, cliente.getCpfCliente());
             ps.setString(2, cliente.getNomeCliente());
             ps.setString(3, cliente.getEmailCliente());
             ps.setString(4, cliente.getCepCliente());
             ps.setString(5, cliente.getRuaCliente());
             ps.setInt(6, cliente.getNrCliente());
-            ps.setString(7, cliente.getCidadeCliente());
+            ps.setInt(7, cliente.getCidadeCliente());
             ps.setDate(8, new java.sql.Date(cliente.getDataCliente().getTime()));
             ps.setString(9, cliente.getUfCliente());
             ps.execute();

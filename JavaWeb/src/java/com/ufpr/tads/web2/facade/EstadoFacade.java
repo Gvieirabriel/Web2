@@ -3,20 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ufpr.tads.web2.dao;
+package com.ufpr.tads.web2.facade;
 
-import com.ufpr.tads.web2.beans.Cidade;
+import com.ufpr.tads.web2.beans.Estado;
 import java.util.List;
 
 /**
  *
  * @author gqueiroz
  */
-public interface CidadeDAO {
-    
-    List<Cidade> listCidade();  
-    
-    Cidade buscaCidadePorId(int id);
-
-    public List<Cidade> listCidadePorEstado(String estado);
+public interface EstadoFacade {
+    List<Estado> buscarTodos();
 }

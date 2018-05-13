@@ -12,9 +12,9 @@ package com.ufpr.tads.web2.beans;
 public class Estado {
     private int idEstado;
     
-    private int nomeEstado;
+    private String nomeEstado;
     
-    private int siglaEstado;
+    private String siglaEstado;
 
     /**
      * @return the idEstado
@@ -33,28 +33,28 @@ public class Estado {
     /**
      * @return the nomeEstado
      */
-    public int getNomeEstado() {
+    public String getNomeEstado() {
         return nomeEstado;
     }
 
     /**
      * @param nomeEstado the nomeEstado to set
      */
-    public void setNomeEstado(int nomeEstado) {
+    public void setNomeEstado(String nomeEstado) {
         this.nomeEstado = nomeEstado;
     }
 
     /**
      * @return the siglaEstado
      */
-    public int getSiglaEstado() {
+    public String getSiglaEstado() {
         return siglaEstado;
     }
 
     /**
      * @param siglaEstado the siglaEstado to set
      */
-    public void setSiglaEstado(int siglaEstado) {
+    public void setSiglaEstado(String siglaEstado) {
         this.siglaEstado = siglaEstado;
     }
     

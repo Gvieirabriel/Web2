@@ -5,9 +5,9 @@
  */
 package com.ufpr.tads.web2.dao.impl;
 
-import com.ufpr.tads.web2.beans.Estado;
+import com.ufpr.tads.web2.beans.TipoAtendimento;
 import com.ufpr.tads.web2.dao.ConnectionFactory;
-import com.ufpr.tads.web2.dao.EstadoDAO;
+import com.ufpr.tads.web2.dao.TipoAtendimentoDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,34 +19,32 @@ import java.util.List;
  *
  * @author gqueiroz
  */
-public class EstadoDAOImpl implements EstadoDAO {
+public class TipoAtendimentoDAOImpl implements TipoAtendimentoDAO {
 
     Connection con = new ConnectionFactory().getConnection();
-    
+
     @Override
-    public List<Estado> listEstado() {
+    public List<TipoAtendimento> listProduto() {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT * FROM tb_estado");
+            ps = con.prepareStatement("SELECT * FROM tb_tipoAtendimento");
             rs = ps.executeQuery();
-            List<Estado> list = new ArrayList<Estado>();
+            List<TipoAtendimento> list = new ArrayList<TipoAtendimento>();
             while (rs.next()) {
-                Estado estado = new Estado();
-                estado.setIdEstado(rs.getInt(1));
-                estado.setNomeEstado(rs.getString(2));
-                estado.setSiglaEstado(rs.getString(3));
-                list.add(estado);
+                TipoAtendimento p = new TipoAtendimento();
+                p.setIdTipoAtendimento(rs.getInt(1));
+                p.setNomeTipoAtendimento(rs.getString(3));
+                list.add(p);
             }
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
-    }
+        return null;    }
 
     @Override
-    public Estado buscaEstadoPorId(int id) {
+    public TipoAtendimento buscaProdutoPorId(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
