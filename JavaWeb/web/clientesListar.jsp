@@ -61,9 +61,16 @@
                                         <td><c:out value = "${cliente.cpfCliente}"/></td>
                                         <td><c:out value = "${cliente.nomeCliente}"/></td>
                                         <td><c:out value = "${cliente.emailCliente}"/></td>
+                                        <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+                                            function newPopup(){
+                                            var answer = confirm ("Deseja realmente fazer isso?")
+                                            if (answer)
+                                                return location.href="ClientesServlet?action=remove&id="+${cliente.idCliente};
+                                            }
+                                        </SCRIPT>
                                         <td><a href="ClientesServlet?action=show&id=" onclick="location.href=this.href+${cliente.idCliente};return false;"><i class="glyphicon glyphicon-list-alt"></i></a></td>
                                         <td><a href="ClientesServlet?action=formUpdate&id=" onclick="location.href=this.href+${cliente.idCliente};return false;"><i class="glyphicon glyphicon-pencil"></i></a></td>
-                                        <td><a href="ClientesServlet?action=remove&id=" onclick="location.href=this.href+${cliente.idCliente};return false;"><i class="glyphicon glyphicon-remove"></i></a></td>
+                                        <td><a href="javascript:newPopup()"><i class="glyphicon glyphicon-remove"></i></a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

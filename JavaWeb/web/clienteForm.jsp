@@ -5,9 +5,54 @@
 --%>
 
 <%@page contentType="text/html" errorPage="erro.jsp" pageEncoding="UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+    
+    <script type="text/javascript" >
+
+                        $("#cpf").mask("000.000.000-00",{reverse:true})
+                        
+                        $("#cep").mask("00000-000",{reverse:true});
+
+                        $("#cidade").append('<option value=' + $("#cityCliente").val() + '>' + $("#cityCliente").val() + '</option>');  
+
+                        $(document).ready(function() {
+                            $( "#estado" ).change(function() {
+                              getCidades();
+                            });
+                        });
+
+                        function getCidades(){
+                            var estadoId = $("#estado").val();
+                            var url = "AjaxServlet";
+                            $.ajax({
+                                    url : url, // URL da sua Servlet
+                                    data : {
+                                        estadoId : estadoId
+                                    }, // Parâmetro passado para a Servlet
+                                    dataType : 'json',
+                                    success : function(data) {
+                                        console.log(estadoId);
+                                        // Se sucesso, limpa e preenche a combo de cidade
+                                        // alert(JSON.stringify(data));
+                                        $("#cidade").empty();
+                                        $.each(data, function(i, obj) {
+                                            $("#cidade").append('<option value=' + obj.idCidade + '>' + obj.nomeCidade + '</option>');  
+                                        });
+                                    },
+                                    error : function(request, textStatus, errorThrown) {
+                                        alert(request.status + ', Error: ' + request.statusText);
+                                         // Erro
+                                    }
+                                });
+                        }
+    </script>
+    
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -44,47 +89,75 @@
             <div class="col-sm-8 text-center">
                 <jsp:useBean id="loginBean" scope="session" class="com.ufpr.tads.web2.beans.LoginBean" />
                 <c:choose>
-                    <c:when test = "${not empty loginBean.nomeUsuario}"> 
-                        <form action='ClientesServlet?action="${form}"' method="POST">
+                    <c:when test = "${not empty loginBean.nomeUsuario}">
+                        <c:choose>
+                            <c:when test = "${form eq 'alterar'}">
+                                <c:set var = "formLink" value = "update"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var = "formLink" value = "new"/>
+                            </c:otherwise>
+                        </c:choose>
+                        
+                        <form id="form" action='ClientesServlet?action=${formLink}' method="POST">
                         <table class="table">
                             <tr>
                               <th>Nome</th>
-                              <td><input type="text" name="nomeCliente"  required /></td>
+                              <td><input type="text" name="nomeCliente" value="${client.nomeCliente}" required /></td>
                             </tr>
                             <tr>
                               <th>CPF</th>
-                              <td><input type="text" name="cpfCliente" maxlength="11" required /></td>
+                              <td><input id="cpf" type="text" name="cpfCliente" maxlength="14" value="${client.cpfCliente}" required /></td>
                             </tr>
                             <tr>
                               <th>Email</th>
-                              <td><input type="email" class="form-control" name="emailCliente" required /></td>
+                              <td><input type="email" name="emailCliente" value="${client.emailCliente}" required /></td>
                             </tr>
                             <tr>
                               <th>CEP</th>
-                              <td><input type="text" name="cepCliente" maxlength="8" required /></td>
+                              <td><input type="text" name="cepCliente" maxlength="9" value="${client.cepCliente}" required /></td>
                             </tr>
                             <tr>
                               <th>Rua</th>
-                              <td><input type="text" name="ruaCliente" required /></td>
+                              <td><input type="text" name="ruaCliente" value="${client.ruaCliente}" required /></td>
+                            </tr>
+                            <tr>
+                              <th>Estado</th>
+                              <td>
+                                <select id="estado" name="estado" form="form">  
+                                    <c:forEach var="elemento" items="${estados}">
+                                        <option value="${elemento.idEstado}">${elemento.nomeEstado}</option>  
+                                    </c:forEach>  
+                                </select>
+                              </td>
                             </tr>
                             <tr>
                               <th>Cidade</th>
-                              <td><input type="text" name="cidadeCliente" required /></td>
-                            </tr>
-                            <tr>
-                              <th>UF</th>
-                              <td><input type="text" name="ufCliente" maxlength="2" required /></td>
+                                <select id="cidade" name="cidade" form="form"> 
+                                </select>
+                              </td>
                             </tr>
                             <tr>
                               <th>Número</th>
-                              <td><input type="number" name="nrCliente" required /></td>
+                              <td><input type="number" name="nrCliente" value="${client.nrCliente}" required /></td>
                             </tr>
                             <tr>
                               <th>Nascimento</th>
-                              <td><input type="date" name="dateCliente" value="2018-01-01" required /></td>
+                              <fmt:formatDate value="${client.dataCliente}"pattern="YYYY-MM-dd" var="formateDate"/>
+                              <td><input type="date" name="dateCliente" value="${formateDate}"/></td>
                             </tr>
                         </table>
-                        <button type="submit" value="Ok">Salvar</button>
+                        
+                        <c:choose>
+                            <c:when test = "${form eq 'alterar'}">
+                                <input type="hidden" name="idCliente" value="${client.idCliente}">
+                                <input id="cityCliente" type="hidden" name="cityCliente" value="${cidadeCliente.nomeCidade}">
+                                <button type="submit" value="Ok">Alterar</button>
+                            </c:when>
+                            <c:otherwise>
+                                <button type="submit" value="Ok">Salvar</button>
+                            </c:otherwise>
+                        </c:choose>
                         <button onclick="window.location.href='ClientesServlet'">Cancelar</button>
                         </form>
                     </c:when>
