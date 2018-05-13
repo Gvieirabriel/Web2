@@ -4,9 +4,9 @@ use bd;
 create table tb_usuario
 (
 	id integer primary key auto_increment,
-	nome_usuario  	varchar(100),
+	nome_usuario  	varchar(100) unique,
 	senha_usuario 	varchar(50),
-    	login_usuario 	varchar(50)
+	login_usuario 	varchar(50) unique
 );
 
 create table tb_estado (
@@ -20,7 +20,7 @@ CREATE TABLE tb_cidade (
 	id_cidade 	 	int not null auto_increment,
 	id_estado 		int not null,
 	nome_cidade 	varchar (100) not null,
-    	foreign key(id_estado) references tb_estado(id_estado),
+	foreign key(id_estado) references tb_estado(id_estado),
 	primary key(id_cidade)
 );
 
@@ -28,22 +28,65 @@ create table tb_cliente
 (
 	id_cliente 		integer primary key auto_increment,
     	cpf_cliente 	char(11) unique,
-    	nome_cliente 	varchar(100) unique,
+    	nome_cliente 	varchar(100),
     	email_cliente 	varchar(100) unique,
     	cep_cliente 	char(8),
     	rua_cliente 	varchar(100),
     	nr_cliente 		integer,
-    	cidade_cliente 	varchar(100),
     	data_cliente 	date,
-	uf_cliente 		char(2),
+		uf_cliente 		char(2),
     	id_cidade		int,
     	foreign key(id_cidade) references tb_cidade(id_cidade)
 );
 
+create table tb_produto
+(
+	id_produto integer primary key auto_increment,
+    nome_produto varchar(100)
+);
+
+create table tb_tipo_atendimento
+(
+	id_tipo_atendimento integer primary key auto_increment,
+    nome_tipo_atendimento varchar(100)
+);
+
+create table tb_atendimento
+(
+	id_atendimento integer primary key auto_increment,
+    dt_hr_atendimento datetime,
+    dsc_atendimento varchar(255),
+    res_atendimento char(1),
+    id_produto integer,
+    id_tipo_atendimento integer,
+    id_usuario integer,
+    foreign key(id_produto) references tb_produto(id_produto),
+    foreign key(id_tipo_atendimento) references tb_tipo_atendimento(id_tipo_atendimento),
+    foreign key(id_usuario) references tb_cliente(id_cliente)
+);
+
+insert into tb_produto(nome_produto) values
+('Tenis'),
+('Sapato'),
+('Chinelo'),
+('Salto'),
+('Pantufa'),
+('Sapatenis'),
+('Bota'),
+('Alpargata'),
+('Crocs'),
+('Meia');
+
+insert into tb_tipo_atendimento(nome_tipo_atendimento) values
+('Reclamação'),
+('Dúvida'),
+('Sugestão'),
+('Elogio');
+
 insert into tb_usuario(nome_usuario,senha_usuario,login_usuario) values
-('Gabriel Vieira','1234','Vrag'),
-('Daniel Henrique','1234','Danyhero'),
-('Thiago Drulla','1234','Drulla');
+('Gabriel Vieira','d41d8cd98f00b204e9800998ecf8427e','Vrag'),
+('Daniel Henrique','d41d8cd98f00b204e9800998ecf8427e','Danyhero'),
+('Thiago Drulla','d41d8cd98f00b204e9800998ecf8427e','Drulla');
 
 insert into tb_estado (nome_estado, sigla_estado) values
 ('Acre', 'AC'),
@@ -5646,14 +5689,14 @@ insert into tb_cidade (id_estado, nome_cidade) values
 (9,'Vila Propício'),
 (7,'Brasília');
 
-insert into tb_cliente(nome_cliente, cpf_cliente, email_cliente, cep_cliente, rua_cliente, nr_cliente, cidade_cliente, data_cliente, id_cidade) values
-('Luiza Helena', '10535548931', 'luiza@gmail.com', '37004808', 'Rua Baena', 123, 'Curitiba', '1998-04-05',100),
-('Daniela Enzo', '85672612369', 'daniela@gmail.com', '24732590', 'Travessa João', 41, 'Patos', '1997-05-06',201),
-('Benjamim Emanuel', '97020753272', 'benjamim@gmail.com', '02873280', 'Rua da Mangueira', 612, 'Santo André', '1995-06-07',10),
-('Telmo Florbela', '78751163500', 'telmo@gmail.com', '82100185', 'Rua Bigorna', 1025, 'São Paulo', '1999-07-08',3521),
-('Rosaura Anabela', '52544286865', 'rosaura@gmail.com', '39803169', 'Rua Carlos', 452, 'Recife', '1997-08-09',893),
-('Virgolina Alfredo', '40307242560', 'virgolina@gmail.com', '13087100', 'Rua São Paulo', 156, 'Santa Luzia', '1995-04-03',1400),
-('Hermesinda Adélia', '96184752634', 'hermesinda@gmail.com', '56321111', 'Rua Gagi', 541, 'Londrina', '1996-05-02',291),
-('Miquelina Graciano', '53733242726', 'miquelina@gmail.com', '03449020', 'Rua Antônio', 245, 'Colatina', '1997-06-04',2001),
-('Mariana Matilda', '37330257338', 'mariana@gmail.com', '82700280', 'Rua Ruthe', 613, 'Diadema', '1997-07-03',666),
-('Leonor Elmira', '60425433340', 'leonor@gmail.com', '13411069', 'Rua Waldemar', 510, 'João Pessoa', '1998-08-05',333);
+insert into tb_cliente(nome_cliente, cpf_cliente, email_cliente, cep_cliente, rua_cliente, nr_cliente, data_cliente, id_cidade) values
+('Luiza Helena', '10535548931', 'luiza@gmail.com', '37004808', 'Rua Baena', 123, '1998-04-05',100),
+('Daniela Enzo', '85672612369', 'daniela@gmail.com', '24732590', 'Travessa João', 41, '1997-05-06',201),
+('Benjamim Emanuel', '97020753272', 'benjamim@gmail.com', '02873280', 'Rua da Mangueira', 612, '1995-06-07',10),
+('Telmo Florbela', '78751163500', 'telmo@gmail.com', '82100185', 'Rua Bigorna', 1025, '1999-07-08',3521),
+('Rosaura Anabela', '52544286865', 'rosaura@gmail.com', '39803169', 'Rua Carlos', 452, '1997-08-09',893),
+('Virgolina Alfredo', '40307242560', 'virgolina@gmail.com', '13087100', 'Rua São Paulo', 156, '1995-04-03',1400),
+('Hermesinda Adélia', '96184752634', 'hermesinda@gmail.com', '56321111', 'Rua Gagi', 541, '1996-05-02',291),
+('Miquelina Graciano', '53733242726', 'miquelina@gmail.com', '03449020', 'Rua Antônio', 245, '1997-06-04',2001),
+('Mariana Matilda', '37330257338', 'mariana@gmail.com', '82700280', 'Rua Ruthe', 613, '1997-07-03',666),
+('Leonor Elmira', '60425433340', 'leonor@gmail.com', '13411069', 'Rua Waldemar', 510, '1998-08-05',333);
