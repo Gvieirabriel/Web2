@@ -30,6 +30,8 @@
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
               <li><a href="ClientesServlet">Clientes</a></li>
+              <li><a href="AtendimentoServlet?action=formNew">Efetuar Atendimento</a></li>
+              <li><a href="AtendimentoServlet?action=list">Mostrar Atendimentos</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="LogoutServlet"><span class="glyphicon glyphicon-log-out"></span>Sair</a></li>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.2.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="atendimentoIntervalo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ce5c48a5-0979-4f59-b16d-249efb106a6c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<field name="nomeCliente" class="java.lang.String"/>
+	<field name="cpfCliente" class="java.lang.String"/>
+	<field name="emailCliente" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement stretchType="ElementGroupHeight" x="180" y="24" width="200" height="30" uuid="f85fe29a-15fd-4866-b4d5-66c23cd2e024"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Atendimentos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="100" height="35" uuid="0306ffd4-bbfe-4204-9f6b-988958f8278b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Ocorridos entre:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="5" width="100" height="35" uuid="b13f2235-60e9-4422-985f-3237080dd7ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{intervaloDatas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="50" height="30" uuid="8d024ea8-fd91-477a-9574-f629e04e2177"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="40" width="50" height="30" uuid="a034a0b9-c5a9-4122-ab1a-05d2240fa5e7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="10" width="50" height="30" uuid="4c629dd8-8034-4cb9-91e8-f5eb19c7cd8a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Tipo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="40" width="50" height="30" uuid="00f72e6c-fc91-49d6-9733-cb77ef45d7ac"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Estado:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="60" y="40" width="100" height="30" uuid="e96454b4-a475-4f69-a55f-2d26e16e5cc8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="10" width="100" height="30" uuid="9ef3d1dc-7bbd-4b60-bdd4-f40dc49dee2b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataAtendimento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="40" width="100" height="30" uuid="b2f17f60-e4c9-4638-bbad-597e97b2a0e2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="10" width="100" height="30" uuid="be5bab5f-2e8c-47fe-a901-6403ecf5f1cb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

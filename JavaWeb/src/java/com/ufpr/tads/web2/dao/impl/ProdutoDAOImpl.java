@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -34,7 +36,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             while (rs.next()) {
                 Produto p = new Produto();
                 p.setIdProduto(rs.getInt(1));
-                p.setNomeProduto(rs.getString(3));
+                p.setNomeProduto(rs.getString(2));
                 list.add(p);
             }
             return list;
@@ -46,7 +48,50 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
     @Override
     public Produto buscaProdutoPorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement("SELECT * FROM tb_produto WHERE id_produto = ?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            List<Produto> list = new ArrayList<Produto>();
+            while (rs.next()) {
+                Produto p = new Produto();
+                p.setIdProduto(rs.getInt(1));
+                p.setNomeProduto(rs.getString(2));
+                list.add(p);
+            }
+            return list.get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void insertProduto(Produto produto) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = con.prepareStatement("INSERT INTO tb_produtos (nome_produto) VALUES (?)");
+            st.setString(1, produto.getNomeProduto()); 
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void removeProduto(int idProduto) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement("DELETE FROM tb_produto WHERE id_produto = ?");
+            ps.setInt(1, idProduto);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     
 }

@@ -19,12 +19,15 @@
                         
                         $("#cep").mask("00000-000",{reverse:true});
 
-                        $("#cidade").append('<option value=' + $("#cityCliente").val() + '>' + $("#cityCliente").val() + '</option>');  
 
                         $(document).ready(function() {
                             $( "#estado" ).change(function() {
                               getCidades();
                             });
+                            if($("#cityCliente").val() != null)
+                            {
+                                $("#cidade").append('<option value=' + $("#cityCliente").val() + '>' + $("#cityCliente").val() + '</option>');  
+                            }
                         });
 
                         function getCidades(){
@@ -73,6 +76,9 @@
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
               <li><a href="ClientesServlet">Clientes</a></li>
+              <li><a href="ClientesServlet">Clientes</a></li>
+              <li><a href="AtendimentoServlet?action=formNew">Efetuar Atendimento</a></li>
+              <li><a href="AtendimentoServlet?action=list">Mostrar Atendimentos</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="LogoutServlet"><span class="glyphicon glyphicon-log-out"></span>Sair</a></li>
@@ -126,13 +132,21 @@
                               <td>
                                 <select id="estado" name="estado" form="form">  
                                     <c:forEach var="elemento" items="${estados}">
-                                        <option value="${elemento.idEstado}">${elemento.nomeEstado}</option>  
+                                        <c:choose>
+                                            <c:when test = "${client.ufCliente eq elemento.idEstado}">
+                                                <option default value="${elemento.idEstado}">${elemento.nomeEstado}</option>  
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="${elemento.idEstado}">${elemento.nomeEstado}</option>  
+                                            </c:otherwise>   
+                                        </c:choose> 
                                     </c:forEach>  
                                 </select>
                               </td>
                             </tr>
                             <tr>
                               <th>Cidade</th>
+                              <td>
                                 <select id="cidade" name="cidade" form="form"> 
                                 </select>
                               </td>

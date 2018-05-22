@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+<libraryInfo home="/home/gqueiroz/Downloads/TIB_js-jss_6.4.2/features/jre.linux.gtk.x86_64.feature_1.8.0.u121" version="1.8.0_121">
+<bootpath>
+<entry path="/home/gqueiroz/Downloads/TIB_js-jss_6.4.2/features/jre.linux.gtk.x86_64.feature_1.8.0.u121/jre/lib/resources.jar"/>
+<entry path="/home/gqueiroz/Downloads/TIB_js-jss_6.4.2/features/jre.linux.gtk.x86_64.feature_1.8.0.u121/jre/lib/rt.jar"/>
+<entry path="/home/gqueiroz/Downloads/TIB_js-jss_6.4.2/features/jre.linux.gtk.x86_64.feature_1.8.0.u121/jre/lib/sunrsasign.jar"/>
+<entry path="/home/gqueiroz/Downloads/TIB_js-jss_6.4.2/features/jre.linux.gtk.x86_64.feature_1.8.0.u121/jre/lib/jsse.jar"/>
+<entry path="/home/gqueiroz/Downloads/TIB_js-jss_6.4.2/features/jre.linux.gtk.x86_64.feature_1.8.0.u121/jre/lib/jce.jar"/>
+<entry path="/home/gqueiroz/Downloads/TIB_js-jss_6.4.2/features/jre.linux.gtk.x86_64.feature_1.8.0.u121/jre/lib/charsets.jar"/>
+<entry path="/home/gqueiroz/Downloads/TIB_js-jss_6.4.2/features/jre.linux.gtk.x86_64.feature_1.8.0.u121/jre/lib/jfr.jar"/>
+<entry path="/home/gqueiroz/Downloads/TIB_js-jss_6.4.2/features/jre.linux.gtk.x86_64.feature_1.8.0.u121/jre/classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="/home/gqueiroz/Downloads/TIB_js-jss_6.4.2/features/jre.linux.gtk.x86_64.feature_1.8.0.u121/jre/lib/ext"/>
+<entry path="/usr/java/packages/lib/ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="/home/gqueiroz/Downloads/TIB_js-jss_6.4.2/features/jre.linux.gtk.x86_64.feature_1.8.0.u121/jre/lib/endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+</libraryInfos>

@@ -29,6 +29,8 @@
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
               <li><a href="ClientesServlet">Clientes</a></li>
+              <li><a href="AtendimentoServlet?action=formNew">Efetuar Atendimento</a></li>
+              <li><a href="AtendimentoServlet?action=list">Mostrar Atendimentos</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="LogoutServlet"><span class="glyphicon glyphicon-log-out"></span>Sair</a></li>
@@ -37,14 +39,34 @@
         </div>
         </nav>   
         </br>
-        <div class="container text-center"> 
+        <div class="text-center">
+        <h2>Usuário logado</h2>
+        <h3><c:out value = "${loginBean.nomeUsuario}"/></h3>
+        </div>
+        <div class="container text-left">
+
             <div class="col-sm-2 sidenav"></div>
-            <div class="col-sm-8 text-center">  
                 <jsp:useBean id="loginBean" scope="session" class="com.ufpr.tads.web2.beans.LoginBean" />
                 <c:choose>
                     <c:when test = "${not empty loginBean.nomeUsuario}">
-                        <h1>Usuário logado</h1>
-                        <h2><c:out value = "${loginBean.nomeUsuario}"/></h2>
+                    <p>
+                            <h3>Relatorios:</h3>
+                            <a href="ReportServlet?action=cliente"><button type="button">Gerar relatório de clientes</button></a></br>
+                            <a href="ReportServlet?action=atendimentoResolvido"><button type="button">Gerar relatório de atendimentos resolvidos</button></a></br>
+                            <form action='ReportServlet?action=atendimentoTipo' method="POST">
+                                <button type="submit">Gerar relatório de atendimentos por tipo</button>
+                                <select name="tipo" style="height:50px; width:160px">
+                                    <c:forEach items="${tipos}" var="tipo">
+                                        <option value="${tipo.idTipoAtendimento}">${tipo.nomeTipoAtendimento}</option>
+                                    </c:forEach>
+                                </select>
+                            </form>
+                            <form action='ReportServlet?action=atendimentoIntervalo' method="POST">
+                                <button type="submit">Gerar relatório de atendimentos entre datas</button>
+                                <input type="date" name="dateCliente"style="height:50px; width:160px"/>
+                                <input type="date" name="dateCliente"style="height:50px; width:160px"/>
+                            </form>
+                    </p>
                     </c:when>
                     <c:otherwise>
                         <jsp:forward page="index.jsp">
@@ -52,7 +74,6 @@
                         </jsp:forward>
                     </c:otherwise>
                 </c:choose>
-            </div>
             <div class="col-sm-2 sidenav"></div>
         </div>
     </body>

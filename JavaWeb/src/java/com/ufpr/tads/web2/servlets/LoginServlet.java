@@ -5,8 +5,10 @@
  */
 package com.ufpr.tads.web2.servlets;
 
+import com.ufpr.tads.web2.beans.Atendimento;
 import com.ufpr.tads.web2.beans.Usuario;
 import com.ufpr.tads.web2.beans.LoginBean;
+import com.ufpr.tads.web2.beans.TipoAtendimento;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +19,11 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
 import com.ufpr.tads.web2.dao.impl.UsuarioDAOImpl;
 import com.ufpr.tads.web2.dao.UsuarioDAO;
+import com.ufpr.tads.web2.facade.AtendimentoFacade;
+import com.ufpr.tads.web2.facade.LoginFacade;
+import com.ufpr.tads.web2.facade.impl.DefaultAtendimentoFacade;
+import com.ufpr.tads.web2.facade.impl.DefaultLoginFacade;
+import java.util.List;
 
 /**
  *
@@ -26,6 +33,9 @@ import com.ufpr.tads.web2.dao.UsuarioDAO;
 public class LoginServlet extends HttpServlet {
     private HttpSession session;
     private RequestDispatcher rd;
+    private LoginFacade loginFacade;
+    private AtendimentoFacade atendimentoFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -52,24 +62,26 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        atendimentoFacade = new DefaultAtendimentoFacade();
         session = request.getSession();
-        
+        loginFacade = new DefaultLoginFacade();
         String login = request.getParameter("login");
         String senha = request.getParameter("senha");
-        UsuarioDAO dao = new UsuarioDAOImpl();
-        Usuario pessoa = dao.loginPessoa(login, senha);
-
-        if (pessoa.getNomeUsuario() == null) {
+        Usuario buscarUsuario = loginFacade.buscarUsuario(login, senha);
+        
+        if (buscarUsuario.getNomeUsuario() == null) {
             rd = getServletContext().getRequestDispatcher("/index.jsp");
             request.setAttribute("msg", "Usuário/Senha inválidos!");
             rd.forward(request, response);
         } else {
             LoginBean loginBean = new LoginBean();
-            loginBean.setLoginUsuario(pessoa.getLoginUsuario());
-            loginBean.setNomeUsuario(pessoa.getNomeUsuario());
+            List<TipoAtendimento> tipos = atendimentoFacade.buscarTodosTipoAtendimento();
+            request.setAttribute("tipos", tipos);
+            loginBean.setLoginUsuario(buscarUsuario.getLoginUsuario());
+            loginBean.setNomeUsuario(buscarUsuario.getNomeUsuario());
+            RequestDispatcher rd = request.getRequestDispatcher("portal.jsp");
             session.setAttribute("loginBean", loginBean);
-            response.sendRedirect("portal.jsp");
+            rd.forward(request, response);
         }
     }
 

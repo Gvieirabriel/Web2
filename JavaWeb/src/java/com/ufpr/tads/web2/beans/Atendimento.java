@@ -21,6 +21,8 @@ public class Atendimento {
     
     private int idUsuario;
     
+    private int idCliente;
+    
     private char resAtendimento;
     
     private String dscAtendimento;
@@ -123,5 +125,19 @@ public class Atendimento {
      */
     public void setDtHrAtendimento(Date dtHrAtendimento) {
         this.dtHrAtendimento = dtHrAtendimento;
+    }
+
+    /**
+     * @return the idCliente
+     */
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    /**
+     * @param idCliente the idCliente to set
+     */
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 }

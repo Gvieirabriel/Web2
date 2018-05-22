@@ -81,4 +81,23 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         return null;
     }
 
+    @Override
+    public Usuario loginPessoa(String login) {
+PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement("SELECT id FROM tb_usuario WHERE login_usuario = ?");
+            ps.setString(1, login);
+            rs = ps.executeQuery();
+            Usuario pessoa = new Usuario();
+            while (rs.next()) {
+                pessoa.setIdPessoa(rs.getInt(1));
+            }
+            return pessoa;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

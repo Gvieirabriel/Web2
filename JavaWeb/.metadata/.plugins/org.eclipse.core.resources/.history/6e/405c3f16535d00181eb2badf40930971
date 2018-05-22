@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.2.final using JasperReports Library version 6.2.2  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="clientReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="db87281b-65f1-4f3d-854f-82befe185397">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<field name="nomeCliente" class="java.lang.String"/>
+	<field name="cpfCliente" class="java.lang.String"/>
+	<field name="emailCliente" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement stretchType="ElementGroupHeight" x="227" y="24" width="100" height="30" uuid="1709ada0-0de7-4d15-a910-3d83e75c9eb0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clientes]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="95" splitType="Stretch">
+			<textField>
+				<reportElement x="50" y="60" width="100" height="30" uuid="6090a016-dac0-458c-87b1-08c3afa8c97c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeCliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="60" width="50" height="30" uuid="de04427a-043d-4452-818d-59b896bc5a81"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="30" y="20" width="50" height="30" uuid="88500d29-5d21-413a-ac7b-4f68c1d57a14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[CPF:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="70" width="50" height="30" uuid="988a66f1-8b01-4a2a-9de4-79edc9ce8a67"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Email:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="20" width="100" height="30" uuid="4a8ecb18-4565-4812-85a6-5b7f0ea9d677"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="70" width="100" height="30" uuid="f74be296-e5bc-4b2d-802e-6935bd68bde2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeCliente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

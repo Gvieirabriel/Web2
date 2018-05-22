@@ -17,4 +17,8 @@ public interface ProdutoDAO {
     List<Produto> listProduto();  
     
     Produto buscaProdutoPorId(int id);
+    
+    void insertProduto(Produto produto);
+   
+    public void removeProduto(int idProduto);
 }

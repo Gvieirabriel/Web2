@@ -24,17 +24,17 @@ public class TipoAtendimentoDAOImpl implements TipoAtendimentoDAO {
     Connection con = new ConnectionFactory().getConnection();
 
     @Override
-    public List<TipoAtendimento> listProduto() {
+    public List<TipoAtendimento> listTipos() {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT * FROM tb_tipoAtendimento");
+            ps = con.prepareStatement("SELECT * FROM tb_tipo_atendimento");
             rs = ps.executeQuery();
             List<TipoAtendimento> list = new ArrayList<TipoAtendimento>();
             while (rs.next()) {
                 TipoAtendimento p = new TipoAtendimento();
                 p.setIdTipoAtendimento(rs.getInt(1));
-                p.setNomeTipoAtendimento(rs.getString(3));
+                p.setNomeTipoAtendimento(rs.getString(2));
                 list.add(p);
             }
             return list;
@@ -44,8 +44,25 @@ public class TipoAtendimentoDAOImpl implements TipoAtendimentoDAO {
         return null;    }
 
     @Override
-    public TipoAtendimento buscaProdutoPorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public TipoAtendimento buscaTipoPorId(int id) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement("SELECT * FROM tb_tipo_atendimento where id_tipo_atendimento = ?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            List<TipoAtendimento> list = new ArrayList<TipoAtendimento>();
+            while (rs.next()) {
+                TipoAtendimento p = new TipoAtendimento();
+                p.setIdTipoAtendimento(rs.getInt(1));
+                p.setNomeTipoAtendimento(rs.getString(2));
+                list.add(p);
+            }
+            return list.get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
 }

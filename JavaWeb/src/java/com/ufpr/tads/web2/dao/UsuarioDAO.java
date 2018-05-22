@@ -15,4 +15,6 @@ import java.util.List;
 public interface UsuarioDAO {
     List<Usuario> listPessoa();  
     Usuario loginPessoa(String login, String senha);
+
+    public Usuario loginPessoa(String login);
 }

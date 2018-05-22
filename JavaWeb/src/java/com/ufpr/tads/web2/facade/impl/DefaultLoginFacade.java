@@ -5,10 +5,29 @@
  */
 package com.ufpr.tads.web2.facade.impl;
 
+import com.ufpr.tads.web2.beans.Usuario;
+import com.ufpr.tads.web2.dao.UsuarioDAO;
+import com.ufpr.tads.web2.dao.impl.UsuarioDAOImpl;
+import com.ufpr.tads.web2.facade.LoginFacade;
+
 /**
  *
  * @author gqueiroz
  */
-public class DefaultLoginFacade {
+public class DefaultLoginFacade implements LoginFacade {
+
+    @Override
+    public Usuario buscarUsuario(String id, String senha) {
+        UsuarioDAO dao = new UsuarioDAOImpl();
+        Usuario pessoa = dao.loginPessoa(id, senha);
+        return pessoa;
+    }
+
+    @Override
+    public Usuario buscarUsuario(String login) {
+        UsuarioDAO dao = new UsuarioDAOImpl();
+        Usuario pessoa = dao.loginPessoa(login);
+        return pessoa;
+    }
     
 }

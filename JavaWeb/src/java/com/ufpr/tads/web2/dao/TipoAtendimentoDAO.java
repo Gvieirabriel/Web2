@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface TipoAtendimentoDAO {
             
-    List<TipoAtendimento> listProduto();  
+    List<TipoAtendimento> listTipos();  
     
-    TipoAtendimento buscaProdutoPorId(int id);
+    TipoAtendimento buscaTipoPorId(int id);
 }

@@ -5,10 +5,14 @@
  */
 package com.ufpr.tads.web2.facade;
 
+import com.ufpr.tads.web2.beans.Usuario;
+
 /**
  *
  * @author gqueiroz
  */
-public class LoginFacade {
-    
+public interface LoginFacade {
+    public Usuario buscarUsuario(String id, String senha);
+
+    public Usuario buscarUsuario(String login);
 }
