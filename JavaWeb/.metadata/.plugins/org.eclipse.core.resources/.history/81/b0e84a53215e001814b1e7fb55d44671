@@ -24,7 +24,7 @@
 	<pageHeader>
 		<band height="44" splitType="Stretch">
 			<textField>
-				<reportElement x="180" y="5" width="120" height="35" uuid="2fbd3673-6265-4d4b-897e-0429fe00eaa3"/>
+				<reportElement x="180" y="5" width="100" height="35" uuid="2fbd3673-6265-4d4b-897e-0429fe00eaa3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>

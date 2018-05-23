@@ -157,7 +157,37 @@ public class AtendimentoDAOImpl implements AtendimentoDAO {
 
     @Override
     public List<AtendimentoReport> listAtendimentosBetweenDates(Date di, Date df) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement("SELECT a.res_atendimento, a.dt_hr_atendimento,t.nome_cliente, tipo.nome_tipo_atendimento "
+                    + "FROM tb_atendimento as a, tb_cliente as t, tb_tipo_atendimento as tipo "
+                    + "WHERE a.id_cliente = t.id_cliente AND a.id_tipo_atendimento = tipo.id_tipo_atendimento AND a.dt_hr_atendimento >= ? AND a.dt_hr_atendimento <= ? ORDER BY a.dt_hr_atendimento ASC");
+            ps.setDate(1, new java.sql.Date(di.getTime()));
+            ps.setDate(2, new java.sql.Date(df.getTime()));
+            rs = ps.executeQuery();
+            List<AtendimentoReport> list = new ArrayList<AtendimentoReport>();
+            Calendar cal = Calendar.getInstance();
+                System.out.println("Temo?"+ps);
+
+            while (rs.next()) {
+                AtendimentoReport atendimento = new AtendimentoReport();
+                cal.setTime(rs.getDate("a.dt_hr_atendimento"));
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:MM");
+                atendimento.setDataAtendimento(format.format(cal.getTime()));
+                atendimento.setNomeCliente(rs.getString("t.nome_cliente"));
+                atendimento.setTipo(rs.getString("tipo.nome_tipo_atendimento"));
+                if(rs.getString("a.res_atendimento").equals("S"))
+                    atendimento.setEstado("Resolvido");
+                else
+                    atendimento.setEstado("Não Resolvido");
+                list.add(atendimento);
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -176,7 +206,7 @@ public class AtendimentoDAOImpl implements AtendimentoDAO {
             while (rs.next()) {
                 AtendimentoReport atendimento = new AtendimentoReport();
                 cal.setTime(rs.getDate("a.dt_hr_atendimento"));
-                SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy HH:MM");
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:MM");
                 atendimento.setDataAtendimento(format.format(cal.getTime()));
                 atendimento.setNomeCliente(rs.getString("t.nome_cliente"));
                 atendimento.setTipo(rs.getString("tipo.nome_tipo_atendimento"));
@@ -208,7 +238,7 @@ public class AtendimentoDAOImpl implements AtendimentoDAO {
             while (rs.next()) {
                 AtendimentoReport atendimento = new AtendimentoReport();
                 cal.setTime(rs.getDate("a.dt_hr_atendimento"));
-                SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy HH:MM");
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:MM");
                 atendimento.setDataAtendimento(format.format(cal.getTime()));
                 atendimento.setNomeCliente(rs.getString("t.nome_cliente"));
                 atendimento.setTipo(rs.getString("tipo.nome_tipo_atendimento"));

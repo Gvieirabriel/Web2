@@ -51,7 +51,7 @@ public class ClientesServlet extends HttpServlet {
         session = request.getSession();
         clientesFacade = new DefaultClientesFacade();
         LoginBean login = (LoginBean) session.getAttribute("loginBean");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String action = request.getParameter("action");
         EstadoFacade estadoFacade;
         CidadeFacade cidadeFacade;

@@ -63,8 +63,8 @@
                             </form>
                             <form action='ReportServlet?action=atendimentoIntervalo' method="POST">
                                 <button type="submit">Gerar relatório de atendimentos entre datas</button>
-                                <input type="date" name="dateCliente"style="height:50px; width:160px"/>
-                                <input type="date" name="dateCliente"style="height:50px; width:160px"/>
+                                <input type="date" name="dateInicial" style="height:50px; width:160px"/>
+                                <input type="date" name="dateFinal" style="height:50px; width:160px"/>
                             </form>
                     </p>
                     </c:when>

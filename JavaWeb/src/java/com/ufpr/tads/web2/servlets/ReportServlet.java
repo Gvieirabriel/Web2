@@ -5,6 +5,7 @@
  */
 package com.ufpr.tads.web2.servlets;
 
+import com.mysql.jdbc.StringUtils;
 import com.ufpr.tads.web2.beans.AtendimentoReport;
 import com.ufpr.tads.web2.beans.Cliente;
 import com.ufpr.tads.web2.facade.AtendimentoFacade;
@@ -14,8 +15,13 @@ import com.ufpr.tads.web2.facade.impl.DefaultClientesFacade;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -67,7 +73,36 @@ public class ReportServlet extends HttpServlet {
                 if(lista!=null)
                 bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params,new JRBeanCollectionDataSource(lista));
             } else if(action.equals("atendimentoIntervalo")) {
-                        
+                jasper = request.getContextPath() + "/atendimentoIntervaloReport.jasper";
+
+                jasperURL = new URL(host + jasper);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                                
+                params = new HashMap();
+                
+                String dis = request.getParameter("dateInicial");
+                String dfs = request.getParameter("dateFinal");
+                Date di = null;
+                Date df = null;
+                
+                if(!StringUtils.isNullOrEmpty(dis))
+                    di = format.parse(dis);
+                else 
+                    di = new Date();
+                
+                if(!StringUtils.isNullOrEmpty(dfs))
+                    df = format.parse(dfs);
+                else
+                    df = new Date();
+                
+                params.put("intervaloDatas",dis+" e "+dfs);
+                
+                List<AtendimentoReport> lista = atendimentoFacade.listAtendimentosBetweenDates(di, df);
+                
+                System.out.println("Teste: "+lista);
+
+                if(lista!=null)
+                bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params,new JRBeanCollectionDataSource(lista));
             } else if(action.equals("atendimentoTipo")) {
                 jasper = request.getContextPath() + "/atendimentoTipoReport.jasper";
 
@@ -80,7 +115,6 @@ public class ReportServlet extends HttpServlet {
                 
                 if(lista!=null)
                 bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params,new JRBeanCollectionDataSource(lista));
-  
             } else if(action.equals("atendimentoResolvido")) {
                 jasper = request.getContextPath() + "/atendimentoResolvidoReport.jasper";
 
@@ -93,7 +127,7 @@ public class ReportServlet extends HttpServlet {
                 if(lista!=null)
                 bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params,new JRBeanCollectionDataSource(lista));
             } else {
-                request.setAttribute("mensagem", "Erro ao tentar requisitar relatorio");
+                request.setAttribute("msg", "Erro ao tentar requisitar relatorio");
                 request.getRequestDispatcher("erro.jsp").forward(request, response);
             }
 
@@ -105,16 +139,18 @@ public class ReportServlet extends HttpServlet {
             }
         }
         catch (JRException e) {
-            request.setAttribute("mensagem", "Erro no Jasper : "
+            request.setAttribute("msg", "Erro no Jasper : "
                     + e.getMessage());
             request.setAttribute("page", "portal.jsp");
             request.getRequestDispatcher("erro.jsp").forward(request, response);
         }
         catch (NullPointerException e)
         {
-            request.setAttribute("mensagem", "Erro ao gerar relatorio : "
+            request.setAttribute("msg", "Erro ao gerar relatorio : "
                     + e.getMessage());
             request.getRequestDispatcher("erro.jsp").forward(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
